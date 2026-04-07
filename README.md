@@ -2,12 +2,8 @@
 
 This project implements matrix multiplication using a **hybrid quantum-classical algorithm** based on the **swap test**, inspired by:
 
-> Schuld et al., *Quantum Algorithms for Matrix Multiplication* (arXiv:1803.01601)
-
-The implementation uses:
-- Qiskit
-- AWS Braket local simulator (`braket_sv`)
-- Hybrid classical + quantum workflow
+Schuld et al., *Quantum Algorithms for Matrix Multiplication*  
+https://arxiv.org/abs/1803.01601
 
 ---
 
@@ -15,46 +11,54 @@ The implementation uses:
 
 Matrix multiplication is computed using:
 
-\[
+$$
 C_{ij} = \text{row}_i(A) \cdot \text{col}_j(B)
-\]
+$$
 
 Instead of computing dot products classically, this project:
-1. Encodes vectors as quantum states
-2. Uses the **swap test** to estimate overlap
-3. Reconstructs the dot product using:
-   - quantum magnitude
-   - classical sign
-   - norm rescaling
+
+- Encodes vectors as quantum states
+- Uses the **swap test** to estimate overlap
+- Reconstructs the dot product using:
+  - quantum magnitude
+  - classical sign
+  - norm rescaling
 
 ---
 
 ## 🧠 Key Idea
 
-For normalized vectors:
+For normalized vectors, the swap test gives:
 
-\[
-p_0 = \frac{1 + |\langle v | w \rangle|^2}{2}
-\]
+$$
+p_0 = \frac{1 + \left|\langle v \mid w \rangle\right|^2}{2}
+$$
 
-We recover:
+We recover the magnitude of the inner product:
 
-\[
-|\langle v | w \rangle| = \sqrt{2p_0 - 1}
-\]
+$$
+\left|\langle v \mid w \rangle\right| = \sqrt{2p_0 - 1}
+$$
 
-Then compute:
+Then compute the full dot product:
 
-\[
-v \cdot w = \text{sign}(v \cdot w) \cdot |\langle v | w \rangle| \cdot ||v|| \cdot ||w||
-\]
+$$
+v \cdot w =
+\text{sign}(v \cdot w)
+\cdot \left|\langle v \mid w \rangle\right|
+\cdot \|v\| \, \|w\|
+$$
 
 ---
 
 ## ⚙️ Features
 
 - Supports matrix multiplication:
-  - \( A_{m \times n} \cdot B_{n \times p} \)
+
+$$
+A_{m \times n} \cdot B_{n \times p}
+$$
+
 - Works for **non-square matrices**
 - Supports **inner dimension ≤ 3**
 - Uses:
