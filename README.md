@@ -15,12 +15,12 @@ $$
 C_{ij} = \text{row}_i(A) \cdot \text{col}_j(B)
 $$
 
-Instead of computing dot products classically, this project:
+Instead of computing dot products purely classically, this project:
 
-- Encodes vectors as quantum states
-- Uses the **swap test** to estimate overlap
+- Encodes vectors as quantum states (amplitude encoding)
+- Uses the **swap test** to estimate inner product magnitude
 - Reconstructs the dot product using:
-  - quantum magnitude
+  - quantum-estimated magnitude
   - classical sign
   - norm rescaling
 
@@ -28,19 +28,19 @@ Instead of computing dot products classically, this project:
 
 ## 🧠 Key Idea
 
-For normalized vectors, the swap test gives:
+For normalized quantum states:
 
 $$
 p_0 = \frac{1 + \left|\langle v \mid w \rangle\right|^2}{2}
 $$
 
-We recover the magnitude of the inner product:
+Recover the overlap magnitude:
 
 $$
 \left|\langle v \mid w \rangle\right| = \sqrt{2p_0 - 1}
 $$
 
-Then compute the full dot product:
+Then compute the classical dot product:
 
 $$
 v \cdot w =
@@ -64,8 +64,20 @@ $$
 - Uses:
   - amplitude encoding (2 qubits per vector)
   - swap test circuit (5 qubits total)
-- Hybrid reconstruction for real-valued matrices
+- Hybrid quantum-classical reconstruction
 
 ---
 
-## 📁 Project Structure
+## 📦 Requirements
+
+### Python
+- Python 3.9+
+
+---
+
+## 📚 Packages & Libraries
+
+Install all dependencies:
+
+```bash
+pip install numpy qiskit qiskit-braket-provider amazon-braket-sdk
